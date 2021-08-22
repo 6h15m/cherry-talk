@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './Join.css';
+import './Join.scss';
 
 const Join = () => {
   const [name, setName] = useState('');
@@ -9,7 +9,7 @@ const Join = () => {
   return (
     <div className="join-outer-container">
       <div className="join-inner-container">
-        <img alt="Cherry Talk" src="./img/title.png" />
+        <img className="title-img" alt="Cherry Talk" src="./img/title.png" />
         <div>
           <input
             placeholder="닉네임 입력"
