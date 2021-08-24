@@ -1,0 +1,97 @@
+@import './../../styles/global';
+
+.chat-outer-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background: $color-black;
+}
+
+.chat-inner-container {
+  display: flex;
+  flex-direction: row;
+  height: 68rem;
+  width: 96rem;
+  margin: auto;
+  background: $color-white;
+  border-radius: 1rem;
+}
+
+.chat-left-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 27.2rem;
+  height: 68rem;
+  background: $color-gray;
+  border-radius: 1rem 0 0 1rem;
+}
+
+.chat-right-container {
+  display: flex;
+  flex-direction: column;
+  width: 68.8rem;
+  height: 68rem;
+  padding: 2rem;
+  align-items: center;
+}
+
+.chat-btm-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.message-container {
+  display: flex;
+  width: 62.8rem;
+  height: 58rem;
+}
+
+.chat-info-container {
+  margin-top: 3rem;
+  width: 22rem;
+  h2 {
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 1.7rem;
+  }
+  h3 {
+    font-size: 1.4rem;
+  }
+  .info-container {
+    display: flex;
+    font-weight: 500;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+  }
+  .info-text {
+    color: $color-red;
+    font-size: 1.4rem;
+  }
+}
+
+.logo {
+  width: 6.6rem;
+  height: 5.6rem;
+  margin-top: 2.8rem;
+}
+
+.send-message-input {
+  width: 58.6rem;
+  height: 4rem;
+  padding-left: 2rem;
+  border: 0.5px solid $color-black;
+  border-radius: 2.4rem;
+  &:focus {
+    outline: none;
+  }
+}
+
+.send-btn {
+  width: 3.6rem;
+  height: 3rem;
+  margin-left: 1.3rem;
+}
