@@ -1,0 +1,63 @@
+@import './../../styles/global';
+
+.admin-messsage {
+  display: flex;
+  width: 97%;
+  justify-content: center;
+  height: 1rem;
+  margin: 2rem;
+  font-size: 1.4rem;
+}
+
+.message-box {
+  border-radius: 1rem;
+  padding: 0.8rem;
+  max-width: 80%;
+  height: max-content;
+}
+
+.message-text {
+  width: 100%;
+  letter-spacing: 0;
+  float: left;
+  font-size: 1.4rem;
+  word-wrap: break-word;
+  color: $color-white;
+}
+
+.message-text img {
+  vertical-align: middle;
+}
+
+.message-container {
+  display: flex;
+  margin-top: 1.2rem;
+}
+
+.sent-text {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  margin-bottom: 0.6rem;
+}
+
+.pr-3 {
+  padding-right: 3rem;
+}
+
+.justify-start {
+  flex-flow: column;
+  align-items: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.background-red {
+  background-color: $color-red;
+}
+
+.background-green {
+  background-color: $color-green;
+}

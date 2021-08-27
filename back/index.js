@@ -1,8 +1,9 @@
-const express = require('express');
-const socketIO = require('socket.io');
 const http = require('http');
+const express = require('express');
+const socketio = require('socket.io');
+const cors = require('cors');
 
-const { addUser, removeUser, getUser, getUsersInRoom } = require('./users.js');
+const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
 const PORT = process.env.PORT || 3001;
 
@@ -10,18 +11,23 @@ const router = require('./router');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server);
+const io = socketio(server);
 
-io.on('connection', (socket) => {
+app.use(cors());
+app.use(router);
+
+io.on('connect', (socket) => {
   socket.on('join', ({ name, room }, callback) => {
     const { error, user } = addUser({ id: socket.id, name, room });
 
     if (error) return callback(error);
 
+    socket.join(user.room);
+
     socket.emit('message', { user: 'admin', text: `${user.name}님, ${user.room}에 오신 것을 환영합니다.` });
     socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name}님이 입장하셨습니다!` });
 
-    socket.join(user.room);
+    io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
 
     callback();
   });
@@ -35,7 +41,12 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('User had left!');
+    const user = removeUser(socket.id);
+
+    if (user) {
+      io.to(user.room).emit('message', { user: 'admin', text: `${user.name}님이 퇴장하셨습니다!` });
+      io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+    }
   });
 });
 

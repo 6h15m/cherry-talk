@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import io from 'socket.io-client';
+
+import Messages from '../Messages/Messages';
+import Input from '../Input/Input';
+
 import './Chat.scss';
+import Participants from '../Participants/Participants';
 
 let socket;
 
 const Chat = ({ location }) => {
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
+  const [users, setUsers] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const ENDPOINT = 'localhost:3000';
@@ -16,23 +23,26 @@ const Chat = ({ location }) => {
     const { name, room } = queryString.parse(location.search);
 
     socket = io(ENDPOINT);
-    setName(name);
+
     setRoom(room);
+    setName(name);
 
-    socket.emit('join', { name, room }, () => {});
-
-    return () => {
-      socket.emit('disconnect');
-
-      socket.off();
-    };
+    socket.emit('join', { name, room }, (error) => {
+      if (error) {
+        alert(error);
+      }
+    });
   }, [ENDPOINT, location.search]);
 
   useEffect(() => {
     socket.on('message', (message) => {
-      setMessages([...messages, message]);
+      setMessages((messages) => [...messages, message]);
     });
-  }, [messages]);
+
+    socket.on('roomData', ({ users }) => {
+      setUsers(users);
+    });
+  }, []);
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -48,7 +58,9 @@ const Chat = ({ location }) => {
     <div className="chat-outer-container">
       <div className="chat-inner-container">
         <div className="chat-left-container">
-          <img className="logo" src="img/logo_small.png" alt="cherry talk logo" />
+          <Link to="/">
+            <img className="logo" src="img/logo_small.png" alt="cherry talk logo" />
+          </Link>
           <div className="chat-info-container">
             <h2>정보</h2>
             <div className="info-container">
@@ -59,20 +71,12 @@ const Chat = ({ location }) => {
               <h3>닉네임</h3>
               <div className="info-text">{name}</div>
             </div>
+            <Participants users={users} />
           </div>
         </div>
         <div className="chat-right-container">
-          <div className="message-container"></div>
-          <div className="chat-btm-container">
-            <input
-              className="send-message-input"
-              placeholder="메세지 입력"
-              value={message}
-              onChange={(event) => setMessage(event.target.value)}
-              onKeyPress={(event) => (event.key === 'Enter' ? sendMessage(event) : null)}
-            />
-            <img className="send-btn" src="img/logo_small.png" alt="send button" />
-          </div>
+          <Messages messages={messages} name={name} />
+          <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>
       </div>
     </div>

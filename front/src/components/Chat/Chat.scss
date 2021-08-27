@@ -30,23 +30,10 @@
 .chat-right-container {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   width: 68.8rem;
   height: 68rem;
-  padding: 2rem;
-  align-items: center;
-}
-
-.chat-btm-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-.message-container {
-  display: flex;
-  width: 62.8rem;
-  height: 58rem;
+  margin: 0 2rem;
 }
 
 .chat-info-container {
@@ -77,21 +64,4 @@
   width: 6.6rem;
   height: 5.6rem;
   margin-top: 2.8rem;
-}
-
-.send-message-input {
-  width: 58.6rem;
-  height: 4rem;
-  padding-left: 2rem;
-  border: 0.5px solid $color-black;
-  border-radius: 2.4rem;
-  &:focus {
-    outline: none;
-  }
-}
-
-.send-btn {
-  width: 3.6rem;
-  height: 3rem;
-  margin-left: 1.3rem;
 }
